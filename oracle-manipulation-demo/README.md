@@ -56,12 +56,7 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
 
 ## 📊 Attack Flow
 
-```mermaid
-graph TD
-    A[Attacker deposits 1 ETH] --> B[Sets fake oracle price to 10 ETH/token]
-    B --> C[Lending Pool uses fake price]
-    C --> D[Pool sends 10 ETH to attacker]
-    D --> E[Attacker keeps the profit]
+![Oracle Manipulation Flow](./oracle-attack-flow.png)
 
 ## 🔍 Result Summary
 After the attack() function is executed:
