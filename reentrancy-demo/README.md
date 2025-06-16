@@ -31,3 +31,12 @@ We analyzed `VulnerableBank.sol` using [Slither](https://github.com/crytic/slith
 ##  Fix
 
 Always update state *before* external calls, or use OpenZeppelin's `ReentrancyGuard`.
+
+## ✅ Secure Version: `SafeBank.sol`
+
+To fix the vulnerability, we simply update the user’s balance before sending ETH. This removes the window of opportunity for a reentrant call.
+
+```solidity
+balances[msg.sender] -= amount;
+(bool sent, ) = msg.sender.call{value: amount}("");
+
