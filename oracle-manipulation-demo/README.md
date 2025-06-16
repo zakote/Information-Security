@@ -17,11 +17,11 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
 
 ## 📁 Contracts
 
-| File                  | Purpose                                     |
-|-----------------------|---------------------------------------------|
-| `SimpleOracle.sol`    | A vulnerable oracle that anyone can set     |
-| `OracleLendingPool.sol` | A lending pool that uses the oracle price  |
-| `OracleAttacker.sol`  | Exploits the oracle to drain ETH            |
+| File                   | Purpose                                      |
+|------------------------|----------------------------------------------|
+| `SimpleOracle.sol`     | A vulnerable oracle that anyone can set      |
+| `OracleLendingPool.sol`| A lending pool that uses the oracle price    |
+| `OracleAttacker.sol`   | Exploits the oracle to drain ETH             |
 
 ---
 
@@ -38,7 +38,7 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
    - Save the address
 
 3. **Deploy `OracleLendingPool`**  
-   - Pass the `SimpleOracle` address as constructor arg  
+   - Pass the `SimpleOracle` address as the constructor argument  
    - Save the pool’s address
 
 4. **Fund the pool with 10 ETH**  
@@ -63,22 +63,15 @@ graph TD
     C --> D[Pool sends 10 ETH to attacker]
     D --> E[Attacker keeps the profit]
 
----
-
 ## 🔍 Result Summary
+After the attack() function is executed:
 
-After the `attack()` function is executed:
+Contract	ETH Balance	Notes
+OracleAttacker	10 ETH	1 ETH deposit + 9 ETH profit
+OracleLendingPool	~0 ETH (drained)	Loss due to manipulated price
 
-| Contract            | ETH Balance           | Notes                            |
-|---------------------|------------------------|----------------------------------|
-| `OracleAttacker`    | **10 ETH**             | 1 ETH deposit + 9 ETH profit     |
-| `OracleLendingPool` | **~0 ETH** (drained)   | Loss due to manipulated price    |
+You can confirm this using:
 
-> You can confirm this using:
-> - `getBalance()` on `OracleAttacker`
-> - `getPoolBalance()` on `OracleLendingPool`
+getBalance() on OracleAttacker
 
----
-
-
-
+getPoolBalance() on OracleLendingPool
