@@ -46,7 +46,7 @@ Unsafe calls
 
 Low-level bugs
 
-##📄 Audit Results Summary
+📄 Audit Results Summary
 Key findings from SafeBank-slither.txt:
 
 ✅ No high or medium severity issues
