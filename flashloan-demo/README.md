@@ -54,6 +54,21 @@ In this simulated exploit:
 
 🎉 This simulates a real-world exploit where the attacker walks away with profit!
 
+🔁 Explanation of Each Step
+Attacker calls startAttack(1 ETH)
+→ Asks lender for a flash loan.
+
+Lender sends 1 ETH to attacker
+→ Calls execute() function in attack contract.
+
+Attacker receives 1 ETH in execute()
+→ Keeps 0.5 ETH, repays only 0.5 ETH.
+
+Lender doesn't check repayment
+→ Accepts partial payment without reverting.
+
+Attacker now has profit (0.5 ETH)
+→ Exploit succeeds.
 ---
 
 ## 📤 Logs
@@ -64,6 +79,33 @@ Look for the `ProfitMade` event in the Remix terminal:
 event ProfitMade(uint256 amount)
 > ProfitMade: 500000000000000000
 
+call
+[call]from: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4to: FlashLoanAttacker.getAttackerBalance()data: 0xa8e...30e2c
+from	0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
+to	FlashLoanAttacker.getAttackerBalance() 0xB57ee0797C3fc0205714a577c02F7205bB89dF30
+execution cost	378 gas (Cost only applies when called by a contract)
+input	0xa8e...30e2c
+output	0x00000000000000000000000000000000000000000000000006f05b59d3b20000
+decoded input	{}
+decoded output	{
+	"0": "uint256: 500000000000000000"
+}
+logs	[]
+raw logs	[]
 
+call to MockLendingProtocol.getPoolBalance
+call
+[call]from: 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4to: MockLendingProtocol.getPoolBalance()data: 0xabd...70aa2
+from	0x5B38Da6a701c568545dCfcB03FcB875f56beddC4
+to	MockLendingProtocol.getPoolBalance() 0xEc29164D68c4992cEdd1D386118A47143fdcF142
+execution cost	334 gas (Cost only applies when called by a contract)
+input	0xabd...70aa2
+output	0x0000000000000000000000000000000000000000000000003e73362871420000
+decoded input	{}
+decoded output	{
+	"0": "uint256: 4500000000000000000"
+}
+logs	[]
+raw logs	[]
 
 
