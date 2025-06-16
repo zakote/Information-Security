@@ -1,42 +1,57 @@
 # 🔓 Reentrancy Attack Demo (Solidity)
 
-This demo shows how a malicious smart contract can exploit a reentrancy vulnerability in a DeFi protocol.
+This demo illustrates how a malicious contract can exploit a **reentrancy vulnerability** in a decentralized finance (DeFi) smart contract.
 
-## 🏦 Vulnerable Contract
+---
 
-`VulnerableBank.sol` allows deposits and withdrawals but sends ETH *before* updating the user's balance. This makes it vulnerable to reentrancy.
+## 🏦 Vulnerable Contract — `VulnerableBank.sol`
 
-## 👾 Attacker Contract
+This smart contract allows users to:
 
-`MaliciousContract.sol` deposits ETH, then repeatedly triggers the `withdraw()` function using a fallback, draining funds before the balance updates.
+- Deposit ETH to their balance
+- Withdraw ETH through a `withdraw()` function
 
-## 🧪 How to Use (in Remix)
+🔴 However, the contract is vulnerable because it sends ETH to the user **before** updating the user's balance. This leaves a window where a reentrant call can occur.
 
-1. Deploy `VulnerableBank`
-2. Deploy `MaliciousContract` with the address of `VulnerableBank`
-3. Send at least 1 ETH to `attack()` function
-4. Watch how the vulnerable contract gets drained
+---
 
-## 🔍 Slither Static Analysis
+## 👾 Attacker Contract — `MaliciousContract.sol`
 
-We analyzed `VulnerableBank.sol` using [Slither](https://github.com/crytic/slither) and found:
+The attacker contract does the following:
 
-- 🛑 **Reentrancy vulnerability** in `withdraw()` — external call made before state update
-- ⚠️ **Low-level call** (`call{value:}`) used without safeguards
-- ⚠️ **Solidity version ^0.8.0** contains known issues (recommended: ^0.8.20+)
+1. Deposits ETH to the vulnerable contract  
+2. Triggers `withdraw()`  
+3. Re-enters the `withdraw()` function via the fallback function  
+4. Repeats this cycle to **drain the contract** before balance updates
 
-📄 [View full Slither report](./slither-report.txt)
+---
 
+## 🧪 How to Run the Demo (in Remix)
 
-##  Fix
+1. **Deploy** `VulnerableBank`
+2. **Deploy** `MaliciousContract`, passing the `VulnerableBank` address as a constructor argument
+3. **Send 1 ETH** to `attack()` in `MaliciousContract`
+4. Use `getBalance()` on `VulnerableBank` to observe it drained
 
-Always update state *before* external calls, or use OpenZeppelin's `ReentrancyGuard`.
+---
 
-## ✅ Secure Version: `SafeBank.sol`
+## 🧠 Vulnerability Summary
 
-To fix the vulnerability, we simply update the user’s balance before sending ETH. This removes the window of opportunity for a reentrant call.
+| Issue                | Explanation                                                                 |
+|---------------------|-----------------------------------------------------------------------------|
+| 🔁 Reentrancy        | Balance is updated *after* sending ETH, enabling repeated withdrawals       |
+| ⚠️ Low-level call    | Uses `call{value:}` which forwards gas and allows fallback execution        |
+| ⛔ No reentrancy lock| Lacks protections like `ReentrancyGuard` or check-effects-interactions pattern |
 
-```solidity
-balances[msg.sender] -= amount;
-(bool sent, ) = msg.sender.call{value: amount}("");
+---
+
+## 🧪 Slither Static Analysis
+
+We used [Slither](https://github.com/crytic/slither) to analyze `VulnerableBank.sol`.
+
+Command:
+
+```bash
+slither VulnerableBank.sol > slither-report.txt
+
 
