@@ -31,7 +31,7 @@ function withdraw(uint256 amount) public {
     (bool sent, ) = msg.sender.call{value: amount}("");
     require(sent, "Transfer failed");
 }
-
+ ``` 
 🧪 Slither Audit
 We used the following command to analyze the contract:
 
