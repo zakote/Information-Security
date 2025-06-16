@@ -71,6 +71,18 @@ Attacker now has profit (0.5 ETH)
 → Exploit succeeds.
 ---
 
+## 🔍 Live Demo Result
+
+After deploying the contracts and executing the flash loan, the following results were observed:
+
+- `getPoolBalance()` → 4.5 ETH
+- `getAttackerBalance()` → 0.5 ETH
+- Event: `ProfitMade(0.5 ETH)`
+
+This confirms that the attacker successfully kept funds due to missing repayment verification.
+
+
+
 ## 📤 Logs
 
 Look for the `ProfitMade` event in the Remix terminal:
