@@ -17,6 +17,17 @@ This demo shows how a malicious smart contract can exploit a reentrancy vulnerab
 3. Send at least 1 ETH to `attack()` function
 4. Watch how the vulnerable contract gets drained
 
-## 🛡 Fix
+## 🔍 Slither Static Analysis
+
+We analyzed `VulnerableBank.sol` using [Slither](https://github.com/crytic/slither) and found:
+
+- 🛑 **Reentrancy vulnerability** in `withdraw()` — external call made before state update
+- ⚠️ **Low-level call** (`call{value:}`) used without safeguards
+- ⚠️ **Solidity version ^0.8.0** contains known issues (recommended: ^0.8.20+)
+
+📄 [View full Slither report](./slither-report.txt)
+
+
+##  Fix
 
 Always update state *before* external calls, or use OpenZeppelin's `ReentrancyGuard`.
