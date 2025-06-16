@@ -1,0 +1,155 @@
+\documentclass[conference]{IEEEtran}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\graphicspath{{./}}
+
+\title{Security Under Siege: A Comprehensive Analysis of Exploits and Defense Mechanisms in Decentralized Finance (DeFi)}
+
+\author{\IEEEauthorblockN{ZAKI ABADI BIN PUTEH and MARSHITAH BINTI MAZLAN}
+\IEEEauthorblockA{Department of Information Systems\\
+Hanyang University\\
+zakotto@hanyang.ac.kr, marshieys@hanyang.ac.kr}}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Decentralized Finance (DeFi) is revolutionizing financial ecosystems through transparent and permissionless systems powered by blockchain smart contracts. However, this autonomy comes with significant security risks. This paper offers a comprehensive survey of critical vulnerabilities within DeFi protocols, classifying them into flash loan exploits, oracle manipulations, reentrancy attacks, and Miner Extractable Value (MEV). We analyze over five major exploit case studies between 2020–2023, detailing attacker techniques and financial impacts. Further, we explore state-of-the-art mitigation strategies, including formal verification, zk-SNARKs, governance mechanisms, and decentralized insurance. Our findings aim to bridge the gap between protocol innovation and robust security design.
+\end{abstract}
+
+\begin{IEEEkeywords}
+DeFi, smart contracts, blockchain, security, flash loan, oracle manipulation, reentrancy, decentralized finance
+\end{IEEEkeywords}
+
+\section{Introduction}
+Decentralized Finance (DeFi) encompasses financial services on blockchain platforms, mainly Ethereum, providing decentralized lending, asset management, and trading without centralized intermediaries. Smart contracts automate these operations, significantly reducing operational costs and increasing transparency. Nevertheless, vulnerabilities inherent in smart contracts have led to substantial financial losses. Analyzing these vulnerabilities is essential to enhance the security posture of the DeFi ecosystem.
+This paper makes the following contributions:
+\begin{itemize}
+  \item Presents a taxonomy of DeFi vulnerabilities across four main classes.
+  \item Provides in-depth analysis of five high-impact DeFi exploits from 2020 to 2023.
+  \item Evaluates mitigation strategies including smart contract audits, formal methods, and decentralized insurance.
+  \item Identifies research gaps and future security directions such as regulatory-compliant DeFi and zero-knowledge defenses.
+\end{itemize}
+
+
+\section{DeFi Background}
+
+Decentralized Finance (DeFi) refers to a new financial ecosystem built on blockchain technology that eliminates the need for traditional financial intermediaries such as banks, brokers, or payment processors. Instead, DeFi protocols operate through smart contracts—self-executing pieces of code deployed on blockchain networks like Ethereum—that automatically enforce rules and execute transactions without human intervention.
+
+At its core, DeFi enables anyone with an internet connection and a digital wallet to access financial services such as lending, borrowing, trading, insurance, and asset management in a permissionless manner. This openness contrasts sharply with traditional finance, where access is often controlled by centralized institutions and regulated environments.
+
+Key components of the DeFi stack include:
+\begin{itemize}
+  \item \textbf{Decentralized Exchanges (DEXs)}: Platforms like Uniswap and SushiSwap allow users to trade tokens directly with each other using liquidity pools, rather than through centralized order books.
+  \item \textbf{Lending and Borrowing Protocols}: Platforms such as Aave and Compound enable users to lend assets and earn interest or borrow assets by posting collateral, all governed by smart contracts.
+  \item \textbf{Stablecoins}: Cryptocurrencies like DAI or USDC are designed to maintain a stable value relative to fiat currencies and serve as key instruments in many DeFi applications.
+  \item \textbf{Oracles}: Networks like Chainlink provide external (off-chain) data, such as real-time asset prices, to smart contracts, enabling them to interact meaningfully with real-world events.
+\end{itemize}
+
+Smart contracts in DeFi are typically immutable once deployed, meaning their code cannot be changed unless pre-programmed upgradability is built in. This immutability provides transparency and trust but also introduces significant risks. Even minor programming errors or unintended interactions between protocols can be exploited, resulting in major financial losses. As DeFi protocols often “compose” or build on top of one another like Lego blocks, a vulnerability in one contract can cascade across multiple systems.
+
+In summary, DeFi represents a revolutionary shift in how financial services are created, accessed, and managed—but it also introduces a unique set of technical and economic risks that must be carefully understood.
+
+
+
+\section{Related Work}
+Recent research has investigated the increasing vulnerability of DeFi platforms to sophisticated attacks. Master et al. (2025) introduced the DMind Benchmark to evaluate LLM capabilities for security diagnostics in the Web3 domain~\cite{master2025dmind}. Zhao et al. (2025) explored Distributed Transaction Sequencing as a mitigation strategy for blockchain extractable value (BEV)~\cite{zhao2025mitigating}. Wu (2024) proposed static analysis techniques for detecting flash loan vulnerabilities~\cite{wu2024static}.
+
+Rahnama (2025) designed DeFiSentinel, an AI-enhanced architecture for anomaly detection in smart contracts~\cite{rahnama2025defisentinel}. Zhang et al. (2024) presented TransFront, a novel model to detect front-running attacks using bi-path fusion~\cite{zhang2024transfront}. Hegde and Hegde (2024) discussed practical implementations of transparent blockchain systems in finance~\cite{hegde2024efficient}.
+
+These works underscore the importance of not just identifying vulnerabilities but also embedding defensive layers into DeFi protocol design, a direction further extended by our survey.
+
+\section{Common Vulnerabilities}
+
+Decentralized Finance (DeFi) systems rely heavily on smart contracts—automated programs that handle money on the blockchain. However, even small flaws in these smart contracts or how they interact with each other can be exploited by attackers. Below are some of the most common and dangerous types of attacks in the DeFi space.
+
+\subsection{Flash Loan Attacks}
+
+Flash loans are a special type of loan in DeFi where users can borrow millions of dollars worth of cryptocurrency instantly—without providing any collateral—as long as they return it within the same transaction. Think of it like borrowing \$1 million for 1 second.
+
+Attackers abuse flash loans by temporarily manipulating the market. For example, they can inflate or deflate the price of a token in a decentralized exchange (DEX), trick another smart contract into believing that a token is more valuable than it really is, and then profit from that lie. This is possible because everything happens so fast—within one blockchain transaction. A well-known example is the bZx protocol, which lost millions due to this type of exploit.
+
+\subsection{Oracle Manipulation}
+
+Smart contracts can't access real-world information (like token prices) by themselves. They depend on “oracles” to feed them this data. Oracles are like messengers that tell smart contracts things like the price of Ethereum or Bitcoin.
+
+But if the oracle gets its information from a weak source—such as a small or thinly-traded DEX—attackers can trick it. For instance, in the Mango Markets exploit, attackers made it look like their token was worth far more than it really was. The smart contract believed the fake price and allowed them to borrow massive amounts of money, which they never intended to repay.
+
+\subsection{Reentrancy Attacks}
+
+A reentrancy attack is like a sneaky backdoor call. Imagine a smart contract that lets users withdraw funds. It first sends money to the user, then updates the balance. In a reentrancy attack, the attacker writes another smart contract that interrupts this process, calling the vulnerable contract again before the balance gets updated.
+
+This trick allows the attacker to withdraw money multiple times in one go. The most famous example is the DAO hack in 2016, where about \$60 million was stolen using this technique. This type of bug still exists today in poorly written contracts.
+
+\subsection{Front-Running and Miner Extractable Value (MEV)}
+
+In traditional finance, “front-running” is when someone sees a big order coming in and jumps ahead to profit from it. In DeFi, this happens when miners or bots rearrange the order of transactions in the block they're confirming.
+
+This practice, known as Miner Extractable Value (MEV), allows them to make money by exploiting price changes between transactions. For example, if someone is swapping tokens on a DEX, a bot might insert its own trade right before and right after to make a profit—at the user's expense. This creates unfair conditions and has become a growing problem.
+
+Researchers and developers are exploring solutions like “private transaction pools” (where bots can't see your transaction) and “fair transaction ordering” to reduce MEV risks.
+
+
+\section{Detailed Case Studies}
+
+\subsection{bZx Protocol (2020)}
+bZx experienced multiple flash loan exploits involving market manipulations and oracle discrepancies. Attackers leveraged liquidity pool imbalances to drain approximately \$8 million, underscoring critical vulnerabilities in flash loan mechanics.
+
+\subsection{Cream Finance (2021)}
+Cream Finance suffered a sophisticated reentrancy exploit, with attackers executing flash loan-enabled double-spending, ultimately resulting in losses exceeding \$130 million.
+
+\subsection{Euler Finance (2023)}
+Euler Finance encountered a logic vulnerability exploit in its liquidity management contract, resulting in a significant \$197 million loss. Eventually, these funds were largely recovered due to public and legal pressure.
+
+\subsection{Mango Markets (2022)}
+Attackers exploited thin liquidity and manipulated token pricing on Mango Markets to artificially increase collateral value, enabling a theft of around \$117 million. This highlighted critical weaknesses in oracle reliability.
+
+\subsection{Harvest Finance (2020)}
+Harvest Finance experienced a flash loan attack manipulating liquidity pool calculations, resulting in a loss of around \$24 million. This demonstrated the complexity and risk associated with DeFi protocol interactions.
+
+\begin{table}[htbp]
+\caption{Major DeFi Exploits}
+\centering
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Protocol} & \textbf{Year} & \textbf{Attack Type} & \textbf{Loss} \\
+\midrule
+bZx & 2020 & Flash Loan & \$8M \\
+Cream Finance & 2021 & Reentrancy & \$130M \\
+Euler Finance & 2023 & Logic Exploit & \$197M \\
+Mango Markets & 2022 & Oracle Manipulation & \$117M \\
+Harvest Finance & 2020 & Flash Loan & \$24M \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Defensive Measures}
+
+\subsection{Auditing and Formal Verification}
+Third-party audits from security firms such as Certik and Trail of Bits provide essential security assurances. Formal verification techniques also mathematically ensure smart contract reliability under predefined conditions.
+
+\subsection{Bug Bounties}
+Bug bounty platforms like Immunefi incentivize ethical vulnerability disclosures, with protocols offering substantial financial rewards to security researchers.
+
+\subsection{Governance and Upgradability}
+DeFi protocols implement governance-driven contract upgrades using proxy patterns, enabling proactive vulnerability management without compromising decentralization principles.
+
+\section{Future Security Directions}
+Emerging strategies to improve DeFi security include:
+\begin{itemize}
+\item \textbf{Regulatory Compliance:} Implementation of KYC and AML features on-chain.
+\item \textbf{Insurance Protocols:} Platforms like Nexus Mutual providing risk coverage for protocol exploits.
+\item \textbf{Zero-Knowledge Proofs (zk-SNARKs):} Enhancing transaction privacy without sacrificing transparency.
+\end{itemize}
+
+\section{Conclusion}
+DeFi is rapidly evolving, continually introducing innovative financial services. However, innovation accompanies security risks. Through comprehensive vulnerability understanding, meticulous audits, and continuous improvements in defensive measures, the DeFi ecosystem can foster more robust, secure financial platforms.
+
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
