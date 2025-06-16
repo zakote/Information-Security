@@ -1,0 +1,33 @@
+'solc --version' running
+'solc VulnerableBank.sol --combined-json abi,ast,bin,bin-runtime,srcmap,srcmap-runtime,userdoc,devdoc,hashes --allow-paths .,/home/zakotto/slither-analysis' running
+INFO:Detectors:
+Reentrancy in VulnerableBank.withdraw(uint256) (VulnerableBank.sol#11-18):
+	External calls:
+	- (sent,None) = msg.sender.call{value: amount}() (VulnerableBank.sol#14)
+	State variables written after the call(s):
+	- balances[msg.sender] -= amount (VulnerableBank.sol#17)
+	VulnerableBank.balances (VulnerableBank.sol#5) can be used in cross function reentrancies:
+	- VulnerableBank.balances (VulnerableBank.sol#5)
+	- VulnerableBank.deposit() (VulnerableBank.sol#7-9)
+	- VulnerableBank.getBalance() (VulnerableBank.sol#20-22)
+	- VulnerableBank.withdraw(uint256) (VulnerableBank.sol#11-18)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+INFO:Detectors:
+Version constraint ^0.8.0 contains known severe issues (https://solidity.readthedocs.io/en/latest/bugs.html)
+	- FullInlinerNonExpressionSplitArgumentEvaluationOrder
+	- MissingSideEffectsOnSelectorAccess
+	- AbiReencodingHeadOverflowWithStaticArrayCleanup
+	- DirtyBytesArrayToStorage
+	- DataLocationChangeInInternalOverride
+	- NestedCalldataArrayAbiReencodingSizeValidation
+	- SignedImmutables
+	- ABIDecodeTwoDimensionalArrayMemory
+	- KeccakCaching.
+It is used by:
+	- ^0.8.0 (VulnerableBank.sol#2)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#incorrect-versions-of-solidity
+INFO:Detectors:
+Low level call in VulnerableBank.withdraw(uint256) (VulnerableBank.sol#11-18):
+	- (sent,None) = msg.sender.call{value: amount}() (VulnerableBank.sol#14)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#low-level-calls
+INFO:Slither:VulnerableBank.sol analyzed (1 contracts with 100 detectors), 3 result(s) found
