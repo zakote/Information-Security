@@ -32,7 +32,7 @@ function withdraw(uint256 amount) public {
     require(sent, "Transfer failed");
 }
  ``` 
-🧪 Slither Audit
+## 🧪 Slither Audit
 We used the following command to analyze the contract:
 
 slither SafeBank.sol --print human-summary > SafeBank-slither.txt
@@ -46,7 +46,7 @@ Unsafe calls
 
 Low-level bugs
 
-📄 Audit Results Summary
+##📄 Audit Results Summary
 Key findings from SafeBank-slither.txt:
 
 ✅ No high or medium severity issues
