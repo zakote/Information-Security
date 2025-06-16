@@ -80,14 +80,5 @@ After the `attack()` function is executed:
 
 ---
 
-## 📄 Event Log 
 
-This log is emitted after the exploit to confirm internal state:
-
-```solidity
-event OracleExploitExecuted(uint256 borrowed, uint256 attackerBalance);
-
-![image](https://github.com/user-attachments/assets/9947d1a9-5cb0-448f-acc8-1b83b7d367da)
-
-![image](https://github.com/user-attachments/assets/981ce989-e745-4d7a-a30e-9a466e1bd48c)
 
