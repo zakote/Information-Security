@@ -41,5 +41,29 @@ In this simulated exploit:
 5. Deploy `FlashLoanAttacker`
    - Input deployed lender address
    - Set VALUE to `0`
-6. Call:
+6. Call: startAttack(1000000000000000000)
+→ This triggers a flash loan of 1 ETH
+7. Call `getPoolBalance()` and `getAttackerBalance()`
+
+---
+
+## ✅ Expected Result
+
+- `MockLendingProtocol` balance: **4.5 ETH**
+- `FlashLoanAttacker` balance: **0.5 ETH**
+
+🎉 This simulates a real-world exploit where the attacker walks away with profit!
+
+---
+
+## 📤 Logs
+
+Look for the `ProfitMade` event in the Remix terminal:
+
+```bash
+event ProfitMade(uint256 amount)
+> ProfitMade: 500000000000000000
+
+
+
 
