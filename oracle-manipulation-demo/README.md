@@ -1,10 +1,10 @@
-# 🛰️ Oracle Manipulation Attack Demo
+#  Oracle Manipulation Attack Demo
 
 This project demonstrates a classic **Oracle Manipulation vulnerability** in decentralized finance (DeFi). The attacker abuses a manipulatable price oracle to overstate collateral value and drain funds from a lending pool.
 
 ---
 
-## 🧠 Overview
+##  Overview
 
 Insecure oracles are a major threat in DeFi protocols. If a lending platform trusts a price feed that can be externally altered, an attacker can:
 
@@ -15,7 +15,7 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
 
 ---
 
-## 📁 Contracts
+##  Contracts
 
 | File                   | Purpose                                      |
 |------------------------|----------------------------------------------|
@@ -25,9 +25,9 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
 
 ---
 
-## 🚀 Setup and Testing (Remix)
+##  Setup and Testing (Remix)
 
-### 🧪 Step-by-Step
+###  Step-by-Step
 
 1. **Compile all contracts**:
    - `SimpleOracle.sol`
@@ -54,11 +54,11 @@ Insecure oracles are a major threat in DeFi protocols. If a lending platform tru
 
 ---
 
-## 📊 Attack Flow
+##  Attack Flow
 
 ![Oracle Manipulation Flow](./oracle-attack-flow.png)
 
-## 🔍 Result Summary
+##  Result Summary
 After the attack() function is executed:
 
 Contract	ETH Balance	Notes
