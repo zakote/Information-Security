@@ -1,4 +1,4 @@
-# 🔐 DeFi Security Survey (Expanded)
+#  DeFi Security Survey (Expanded)
 
 An IEEE-format research paper and hands-on demo collection focused on **vulnerabilities, attack vectors**, and **defensive mechanisms** in Decentralized Finance (DeFi).
 
@@ -7,21 +7,21 @@ Department of Information Systems, Hanyang University
 
 ---
 
-## 📄 Paper Summary
+##  Paper Summary
 
 This project includes an in-depth technical survey covering:
 
-- ⚠️ Flash Loan Attacks
-- ⚠️ Oracle Manipulation
-- ⚠️ Reentrancy
-- ⚠️ Miner Extractable Value (MEV)
-- ✅ Defensive techniques (Auditing, Formal Verification, Bug Bounties, etc.)
-- 🧪 Experiments with real attack simulations
-- 📊 Real-world case studies (bZx, Mango Markets, Cream Finance, etc.)
+- ⚠ Flash Loan Attacks
+- ⚠ Oracle Manipulation
+- ⚠ Reentrancy
+- ⚠ Miner Extractable Value (MEV)
+-  Defensive techniques (Auditing, Formal Verification, Bug Bounties, etc.)
+-  Experiments with real attack simulations
+-  Real-world case studies (bZx, Mango Markets, Cream Finance, etc.)
 
 ---
 
-## 🧪 Practical Demos (Solidity)
+##  Practical Demos (Solidity)
 
 Each exploit is implemented in Remix-compatible Solidity with full documentation and result validation.
 
@@ -34,7 +34,7 @@ Each exploit is implemented in Remix-compatible Solidity with full documentation
 
 ---
 
-## 📁 Repository Contents
+##  Repository Contents
 
 | File / Folder                    | Description                                       |
 |----------------------------------|---------------------------------------------------|
@@ -45,16 +45,16 @@ Each exploit is implemented in Remix-compatible Solidity with full documentation
 
 ---
 
-## 📊 Project Highlights
+##  Project Highlights
 
-- ✅ Formal modeling of real-world DeFi hacks
-- ✅ Remix + WSL + Slither static analysis workflows
-- ✅ Ready-to-run Solidity code for each attack and fix
-- ✅ Paper submitted in IEEE LaTeX format with full citation support
+-  Formal modeling of real-world DeFi hacks
+-  Remix + WSL + Slither static analysis workflows
+-  Ready-to-run Solidity code for each attack and fix
+-  Paper submitted in IEEE LaTeX format with full citation support
 
 ---
 
-## 🔗 Repository Navigation
+##  Repository Navigation
 
 Use the folders for hands-on testing:
 
