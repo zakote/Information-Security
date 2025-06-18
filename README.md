@@ -11,10 +11,10 @@ Department of Information Systems, Hanyang University
 
 This project includes an in-depth technical survey covering:
 
-- ⚠ Flash Loan Attacks
-- ⚠ Oracle Manipulation
-- ⚠ Reentrancy
-- ⚠ Miner Extractable Value (MEV)
+-  Flash Loan Attacks
+-  Oracle Manipulation
+-  Reentrancy
+-  Miner Extractable Value (MEV)
 -  Defensive techniques (Auditing, Formal Verification, Bug Bounties, etc.)
 -  Experiments with real attack simulations
 -  Real-world case studies (bZx, Mango Markets, Cream Finance, etc.)
