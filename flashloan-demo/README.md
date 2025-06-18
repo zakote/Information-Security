@@ -1,16 +1,16 @@
-# ⚠️ Flash Loan Exploit Demo (Solidity)
+#  Flash Loan Exploit Demo (Solidity)
 
 This project demonstrates a simplified flash loan exploit simulation using Solidity smart contracts in Remix. It simulates how an attacker can borrow ETH via a flash loan and retain part of the funds when the lender fails to verify repayment.
 
 ---
 
-## 🧠 What is a Flash Loan?
+##  What is a Flash Loan?
 
 A flash loan allows a user to borrow assets with **no collateral**, under the condition that the loan is **repaid within the same transaction**. If the repayment condition fails, the entire transaction reverts.
 
 ---
 
-## 💣 Exploit Scenario
+##  Exploit Scenario
 
 In this simulated exploit:
 - A vulnerable lender issues a flash loan
@@ -20,7 +20,7 @@ In this simulated exploit:
 
 ---
 
-## 🧪 Contracts Overview
+##  Contracts Overview
 
 | Contract | Description |
 |----------|-------------|
@@ -30,7 +30,7 @@ In this simulated exploit:
 
 ---
 
-## 🚀 How to Test in Remix
+##  How to Test in Remix
 
 1. **Load all `.sol` files** into Remix IDE
 2. **Compile all contracts**
@@ -47,14 +47,14 @@ In this simulated exploit:
 
 ---
 
-## ✅ Expected Result
+##  Expected Result
 
 - `MockLendingProtocol` balance: **4.5 ETH**
 - `FlashLoanAttacker` balance: **0.5 ETH**
 
-🎉 This simulates a real-world exploit where the attacker walks away with profit!
+ This simulates a real-world exploit where the attacker walks away with profit!
 
-🔁 Explanation of Each Step
+ Explanation of Each Step
 Attacker calls startAttack(1 ETH)
 → Asks lender for a flash loan.
 
@@ -71,7 +71,7 @@ Attacker now has profit (0.5 ETH)
 → Exploit succeeds.
 ---
 
-## 🔍 Live Demo Result
+##  Live Demo Result
 
 After deploying the contracts and executing the flash loan, the following results were observed:
 
@@ -83,7 +83,7 @@ This confirms that the attacker successfully kept funds due to missing repayment
 
 
 
-## 📤 Logs
+##  Logs
 
 Look for the `ProfitMade` event in the Remix terminal:
 
